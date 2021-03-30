@@ -1,5 +1,8 @@
 <template>
   <div class="org-container">
+    <div class="utils">
+      <button @click="resetZoom">重置</button>
+    </div>
     <svg :viewBox="viewBox" ref="svgRef">
       <g class="container">
         <!-- 线条 -->
@@ -77,7 +80,7 @@ export default {
         PADDING * 2} ${height + PADDING * 2}`;
     },
     handleZoom() {
-      const zoom = d3
+      this.zoom = d3
         .zoom()
         .scaleExtent([0.5, 2])
         .on('zoom', (event) => {
@@ -85,8 +88,14 @@ export default {
         });
 
       d3.select(this.$refs.svgRef)
-        .call(zoom.transform, d3.zoomIdentity)
-        .call(zoom);
+        .call(this.zoom.transform, d3.zoomIdentity)
+        .call(this.zoom);
+    },
+    resetZoom() {
+      d3.select(this.$refs.svgRef)
+        .transition()
+        .duration(750)
+        .call(this.zoom.transform, d3.zoomIdentity);
     },
   },
 };
@@ -95,6 +104,26 @@ export default {
 <style>
 .org-container {
   height: 100%;
+  position: relative;
+}
+.org-container .utils {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.org-container .utils button {
+  cursor: pointer;
+  padding: 0;
+  width: 55px;
+  height: 26px;
+  font-size: 13px;
+  border: 1px solid #6cbd45;
+  color: #6cbd45;
+  background-color: #fff;
+  outline: none;
+}
+.org-container .utils button:hover {
+  opacity: 0.8;
 }
 svg {
   width: 100%;
