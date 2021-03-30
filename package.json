@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "d3": "^6.6.2",
+    "d3-flextree": "^2.1.1",
+    "lodash.clonedeep": "^4.5.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
